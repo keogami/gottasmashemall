@@ -42,7 +42,7 @@ class Home extends Component<{}, AppState> {
         id='smash'
         onClick={() => this.handleInput(INPUT_PASS)}
       >
-      Smash
+      Pass
       </button>
     </>
   }
