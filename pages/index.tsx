@@ -8,6 +8,7 @@ const [INPUT_SMASH, INPUT_PASS]: Input[] = [Symbol('smash'), Symbol('pass')]
 type AppState = {
   smashed: number[]
   current: number
+  image: string
 }
 class Home extends Component<{}, AppState> {
   constructor(props: any) {
@@ -15,6 +16,7 @@ class Home extends Component<{}, AppState> {
     this.state = {
       smashed: [],
       current: 1,
+      image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png'
     }
   }
 
@@ -30,7 +32,7 @@ class Home extends Component<{}, AppState> {
   render() {
     return <>
       <Image
-        src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/123.png'
+        src={this.state.image}
         alt='scyther'
         width={475}
         height={475}
