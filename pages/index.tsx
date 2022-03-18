@@ -5,9 +5,21 @@ type Input = symbol
 
 const [INPUT_SMASH, INPUT_PASS]: Input[] = [Symbol('smash'), Symbol('pass')]
 
-class Home extends Component {
+type AppState = {
+  history: Input[]
+}
+class Home extends Component<{}, AppState> {
+  constructor(props: any) {
+    super(props)
+    this.state = {
+      history: []
+    }
+  }
+
   handleInput(input: Input) {
-    console.log(input)
+    const newState = {history: [...this.state.history, input]}
+    this.setState(newState)  
+    console.log(newState.history)
   }
   
   render() {
