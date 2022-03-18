@@ -1,23 +1,40 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
+import {Component} from 'react'
 import Image from 'next/image'
 
-const Home: NextPage = () => (
-  <>
-    <Head>
-      <title>Gotta Smash Em All</title>
-    </Head>
+type Input = symbol
 
-    <Image
-      src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png' 
-      width={475}
-      height={475}
-      alt='Pokemon'
-    />
+const [INPUT_SMASH, INPUT_PASS]: Input[] = [Symbol('smash'), Symbol('pass')]
 
-    <button>Smash</button><button>Pass</button>
-  </>
-)
+class Home extends Component {
+  handleInput(input: Input) {
+    console.log(input)
+  }
+  
+  render() {
+    return <>
+      <Image
+        src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/123.png'
+        alt='scyther'
+        width={475}
+        height={475}
+      />
+
+      <button
+        id='smash'
+        onClick={() => this.handleInput(INPUT_SMASH)}
+      >
+      Smash
+      </button>
+
+      <button
+        id='smash'
+        onClick={() => this.handleInput(INPUT_PASS)}
+      >
+      Smash
+      </button>
+    </>
+  }
+}
 
 export default Home
 
