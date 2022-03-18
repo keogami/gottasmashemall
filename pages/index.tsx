@@ -5,45 +5,57 @@ type Input = symbol
 
 const [INPUT_SMASH, INPUT_PASS]: Input[] = [Symbol('smash'), Symbol('pass')]
 
-type AppState = {
-  smashed: number[]
-  current: number
+type PokemonData = {
+  id: number
   image: string
+  sprite: string
+}
+
+type AppState = {
+  smashed: PokemonData[]
+  current: PokemonData
 }
 class Home extends Component<{}, AppState> {
   constructor(props: any) {
     super(props)
     this.state = {
       smashed: [],
-      current: 1,
-      image: 'https://raw.githubusercontent.com'
+      current: {
+        id: 0,
+        image: 'https://raw.githubusercontent.com',
+        sprite: 'https://raw.githubusercontent.com'
+      },
     }
   }
 
   componentDidMount() {
-    this.loadPokemon(this.state.current)
+    this.loadNextPokemon()
   }
 
-  loadPokemon(id: number) {
+  loadNextPokemon() {
+    const id = this.state.current.id + 1
     this.setState({
-      image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
+      current: {
+        id: id,
+        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
+        sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
+      }
     })
   }
 
   handleInput(input: Input) {
     const newState = {
-      current: this.state.current + 1,
       smashed: (input === INPUT_SMASH) ? [...this.state.smashed, this.state.current] : this.state.smashed,
     }
     this.setState(newState)
-    this.loadPokemon(newState.current)
+    this.loadNextPokemon()
     console.log(newState.smashed)
   }
   
   render() {
     return <>
       <Image
-        src={this.state.image}
+        src={this.state.current.image}
         alt='scyther'
         width={475}
         height={475}
