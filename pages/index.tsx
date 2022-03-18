@@ -6,20 +6,25 @@ type Input = symbol
 const [INPUT_SMASH, INPUT_PASS]: Input[] = [Symbol('smash'), Symbol('pass')]
 
 type AppState = {
-  history: Input[]
+  smashed: number[]
+  current: number
 }
 class Home extends Component<{}, AppState> {
   constructor(props: any) {
     super(props)
     this.state = {
-      history: []
+      smashed: [],
+      current: 1,
     }
   }
 
   handleInput(input: Input) {
-    const newState = {history: [...this.state.history, input]}
-    this.setState(newState)  
-    console.log(newState.history)
+    const newState = {
+      current: this.state.current + 1,
+      smashed: (input === INPUT_SMASH) ? [...this.state.smashed, this.state.current] : this.state.smashed,
+    }
+    this.setState(newState)
+    console.log(newState)
   }
   
   render() {
