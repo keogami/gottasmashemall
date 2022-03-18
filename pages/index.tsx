@@ -9,7 +9,18 @@ type PokemonData = {
   id: number
   image: string
   sprite: string
+  name: string
 }
+
+const SmashItem = (data: PokemonData) => (
+  <li key={data.id}>
+    <Image
+      src={data.sprite}
+      width={96} height={96}
+      alt={data.name}
+    />
+  </li>
+)
 
 type AppState = {
   smashed: PokemonData[]
@@ -23,7 +34,8 @@ class Home extends Component<{}, AppState> {
       current: {
         id: 0,
         image: 'https://raw.githubusercontent.com',
-        sprite: 'https://raw.githubusercontent.com'
+        sprite: 'https://raw.githubusercontent.com',
+        name: 'MissingNo.'
       },
     }
   }
@@ -38,7 +50,8 @@ class Home extends Component<{}, AppState> {
       current: {
         id: id,
         image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
-        sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
+        sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
+        name: String(id),
       }
     })
   }
@@ -49,7 +62,6 @@ class Home extends Component<{}, AppState> {
     }
     this.setState(newState)
     this.loadNextPokemon()
-    console.log(newState.smashed)
   }
   
   render() {
@@ -74,6 +86,9 @@ class Home extends Component<{}, AppState> {
       >
       Pass
       </button>
+      <ul>
+        {this.state.smashed.map(SmashItem)}
+      </ul>
     </>
   }
 }
