@@ -16,8 +16,18 @@ class Home extends Component<{}, AppState> {
     this.state = {
       smashed: [],
       current: 1,
-      image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png'
+      image: 'https://raw.githubusercontent.com'
     }
+  }
+
+  componentDidMount() {
+    this.loadPokemon(this.state.current)
+  }
+
+  loadPokemon(id: number) {
+    this.setState({
+      image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`
+    })
   }
 
   handleInput(input: Input) {
@@ -26,7 +36,8 @@ class Home extends Component<{}, AppState> {
       smashed: (input === INPUT_SMASH) ? [...this.state.smashed, this.state.current] : this.state.smashed,
     }
     this.setState(newState)
-    console.log(newState)
+    this.loadPokemon(newState.current)
+    console.log(newState.smashed)
   }
   
   render() {
