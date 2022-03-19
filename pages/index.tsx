@@ -154,7 +154,6 @@ class Home extends Component<{}, AppState> {
       <div className={styles.stage}>
         <DataWindow data={this.state.current.meta} />
 
-          image:  
         <Image
           src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${this.state.current.summary.id}.png`}
           alt='scyther'
