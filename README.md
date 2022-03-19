@@ -19,7 +19,7 @@ The meat and bones, the essential, the prototype
 The obviously solicited features
 - [X] Show extra information like`types` `weight` `height` `species`, so that people can make educated decisions about what pokemons to smash
 - [X] Allow sharing list of `the smashed ones`
-- [ ] Allow changing decisions (we all second guess are decisions, let me enable you)
+- [X] Allow changing decisions (we all second guess are decisions, let me enable you)
 - [ ] Keyboard and mouse shortcuts, so that you can smash em faster
 - [X] Show mega evolutions and alternate forms too
 
