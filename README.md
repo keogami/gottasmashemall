@@ -1,34 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Gotta Smash 'em All!
+The name says it all: you get pokemons and you smash em the nice way (or pass, but why would you?)
 
-## Getting Started
+## What?
+GTFO~
 
-First, run the development server:
+## Why?
+I forced my friends to play smash or pass with me, but sending pictures in a GC and waiting for them to come around wasn't fun enough so, yeah
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+## Development roadmap
+This is a list of features that I am going to implement
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 0.1.0
+The meat and bones, the essential, the prototype
+- [X] Allow smashing and passing
+- [X] Show a list tiny sprites of `the smashed ones`
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### 0.2.0
+The obviously solicited features
+- [ ] Show extra information like`types` `weight` `height` `species`, so that people can make educated decisions about what pokemons to smash
+- [ ] Allow sharing list of `the smashed ones`
+- [ ] Allow changing decisions (we all second guess are decisions, let me enable you)
+- [ ] Keyboard and mouse shortcuts, so that you can smash em faster
+- [ ] Show mega evolutions and alternate forms too
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### 0.3.0
+Make it look and feel nice
+- [ ] Actually make a UI
+- [ ] Allow tinder-esque swipe-to-smash control
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### 1.0.0
+If I couldn't come up with anything else, I will make the latest realease the 1.0.0 release
 
-## Learn More
+## Contribution
+Contributions are nice (and I am lazy af) so I would love them. However, as of right now, the code organisation is... sub par... to say the least
+To avoid conflicts, I wont be accepting contribs until 1.0.0 is released, after which it's all yours to smash
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Shameless Ko-Fi plug?
+Not now, but not never X3
