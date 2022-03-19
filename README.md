@@ -21,7 +21,7 @@ The obviously solicited features
 - [X] Allow sharing list of `the smashed ones`
 - [ ] Allow changing decisions (we all second guess are decisions, let me enable you)
 - [ ] Keyboard and mouse shortcuts, so that you can smash em faster
-- [ ] Show mega evolutions and alternate forms too
+- [X] Show mega evolutions and alternate forms too
 
 ### 0.3.0
 Make it look and feel nice
