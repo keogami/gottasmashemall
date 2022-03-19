@@ -1,19 +1,33 @@
 import {Component} from 'react'
 import Image from 'next/image'
+import { PokemonClient } from 'pokenode-ts'
 import styles from '../styles/Home.module.css'
 
 type Input = symbol
 
 const [INPUT_SMASH, INPUT_PASS]: Input[] = [Symbol('smash'), Symbol('pass')]
 
-type PokemonData = {
+type PokemonSummary = {
   id: number
   image: string
   sprite: string
   name: string
 }
 
-const SmashItem = (data: PokemonData) => (
+type PokemonMeta = {
+  height: number
+  weight: number
+  types: string[]
+  abilities: string[]
+}
+const NoMeta: PokemonMeta = {height: 0, weight: 0, types: [], abilities: []}
+
+type PokemonData = {
+  summary: PokemonSummary
+  meta: PokemonMeta
+}
+
+const SmashItem = (data: PokemonSummary) => (
   <li key={data.id}>
     <Image
       src={data.sprite}
@@ -22,6 +36,17 @@ const SmashItem = (data: PokemonData) => (
     />
   </li>
 )
+
+const DataWindow = ({ data }: {data: PokemonMeta}) => (
+  <div>
+    weight: {data.weight}<br />
+    height: {data.height}<br />
+    tags: {data.types.join(" , ")}<br />
+    abilities: {data.abilities.join(" , ")}<br />
+  </div>
+)
+
+const api = new PokemonClient()
 
 type AppState = {
   smashed: PokemonData[]
@@ -33,10 +58,13 @@ class Home extends Component<{}, AppState> {
     this.state = {
       smashed: [],
       current: {
-        id: 0,
-        image: 'https://raw.githubusercontent.com',
-        sprite: 'https://raw.githubusercontent.com',
-        name: 'MissingNo.'
+        summary: {
+          id: 0,
+          image: 'https://raw.githubusercontent.com',
+          sprite: 'https://raw.githubusercontent.com',
+          name: 'MissingNo.'
+        },
+        meta: NoMeta,
       },
     }
   }
@@ -45,16 +73,24 @@ class Home extends Component<{}, AppState> {
     this.loadNextPokemon()
   }
 
-  loadNextPokemon() {
-    const id = this.state.current.id + 1
-    this.setState({
+  async loadNextPokemon() {
+    const id = this.state.current.summary.id + 1
+    api.getPokemonById(id)
+    .then(data => this.setState({
       current: {
-        id: id,
-        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
-        sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
-        name: String(id),
-      }
-    })
+        summary: {
+          id: data.id,
+          image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
+          sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
+          name: data.name,
+        },
+        meta: {
+          ...this.state.current.meta, weight: data.weight, height: data.height, types: data.types.map(it => it.type.name),
+          abilities: data.abilities.map(it => it.ability.name),
+        },
+      } 
+    }))
+    .catch(e => console.table({id: id, err: e}))
   }
 
   handleInput(input: Input) {
@@ -67,9 +103,11 @@ class Home extends Component<{}, AppState> {
   
   render() {
     return <div className={styles.papa}>
-    <div className={styles.stage}>
+      <div className={styles.stage}>
+        <DataWindow data={this.state.current.meta} />
+
         <Image
-          src={this.state.current.image}
+          src={this.state.current.summary.image}
           alt='scyther'
           width={475}
           height={475}
@@ -82,7 +120,7 @@ class Home extends Component<{}, AppState> {
             id='smash'
             onClick={() => this.handleInput(INPUT_SMASH)}
           >
-          Smash
+          Smash {this.state.current.summary.name}
           </button>
 
           <button
@@ -96,7 +134,7 @@ class Home extends Component<{}, AppState> {
       </div>
 
       <ul className={styles.smashList}>
-        {this.state.smashed.map(SmashItem)}
+        {this.state.smashed.map(data => data.summary).map(SmashItem)}
       </ul>
     </div>
   }
