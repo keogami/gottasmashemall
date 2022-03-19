@@ -108,6 +108,12 @@ class Home extends Component<{}, AppState> {
   }
 
   componentDidMount() {
+    window.addEventListener('keyup', ev => {
+      switch (ev.key) {
+        case "f": this.handleInput(INPUT_SMASH)
+        case "j": this.handleInput(INPUT_PASS)
+      }
+    })
     this.loadNextPokemon()
   }
 
