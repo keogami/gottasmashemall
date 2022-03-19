@@ -46,6 +46,31 @@ const DataWindow = ({ data }: {data: PokemonMeta}) => (
   </div>
 )
 
+const cRandID = (pass: number = 10): string => {
+  if (pass === 0) return ''
+  return Math.floor(Math.random() * 16).toString(16) + cRandID(pass - 1)
+}
+
+const generateID = (): string => {
+  return (Date.now().toString(16) + cRandID()).toUpperCase()
+}
+
+const sendToDB = async (list: string) => {
+  const id = generateID()
+  const resp = await fetch('https://gottasmashemall-47a7.restdb.io/rest/smashlist', {
+    method: "POST",
+    headers: {
+      'x-apikey': '6235aa84dced170e8c83a3b2',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      key: id,
+      value: list,
+    })
+  })
+  return resp.json()
+}
+
 const api = new PokemonClient()
 
 type AppState = {
@@ -67,6 +92,13 @@ class Home extends Component<{}, AppState> {
         meta: NoMeta,
       },
     }
+  }
+
+  async serialize() {
+    const data = this.state.smashed.map(it => ({id: it.summary.id, name: it.summary.name}))
+    const json = JSON.stringify(data)
+    
+    console.log(await sendToDB(json))
   }
 
   componentDidMount() {
@@ -133,6 +165,7 @@ class Home extends Component<{}, AppState> {
         </div>
       </div>
 
+      <button onClick={() => this.serialize()}>Share</button>
       <ul className={styles.smashList}>
         {this.state.smashed.map(data => data.summary).map(SmashItem)}
       </ul>
