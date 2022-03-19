@@ -10,8 +10,6 @@ const [INPUT_SMASH, INPUT_PASS]: Input[] = [Symbol('smash'), Symbol('pass')]
 
 type PokemonSummary = {
   id: number
-  image: string
-  sprite: string
   name: string
 }
 
@@ -31,7 +29,7 @@ type PokemonData = {
 const SmashItem = (data: PokemonSummary) => (
   <li key={data.id}>
     <Image
-      src={data.sprite}
+      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.id}.png`}
       width={96} height={96}
       alt={data.name}
     />
@@ -77,6 +75,7 @@ const api = new PokemonClient()
 type AppState = {
   smashed: PokemonData[]
   current: PokemonData
+  previous: PokemonData | null
   isShared: boolean,
   shareID: string,
 }
@@ -86,11 +85,10 @@ class Home extends Component<{}, AppState> {
     this.state = {
       isShared: false, shareID: '',
       smashed: [],
+      previous: null,
       current: {
         summary: {
           id: 0,
-          image: 'https://raw.githubusercontent.com',
-          sprite: 'https://raw.githubusercontent.com',
           name: 'MissingNo.'
         },
         meta: NoMeta,
@@ -120,8 +118,6 @@ class Home extends Component<{}, AppState> {
       current: {
         summary: {
           id: data.id,
-          image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
-          sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
           name: data.name,
         },
         meta: {
@@ -136,9 +132,21 @@ class Home extends Component<{}, AppState> {
   handleInput(input: Input) {
     const newState = {
       smashed: (input === INPUT_SMASH) ? [...this.state.smashed, this.state.current] : this.state.smashed,
+      previous: this.state.current,
     }
     this.setState(newState)
     this.loadNextPokemon()
+  }
+
+  goBack() {
+    const wasLastSmashed = (this.state.smashed.length != 0) && (this.state.previous?.summary.id === this.state.smashed[this.state.smashed.length - 1].summary.id)
+    const newList = !wasLastSmashed ? this.state.smashed : this.state.smashed.slice(0, this.state.smashed.length - 1)
+    const newState = {
+      current: this.state.previous as PokemonData,
+      smashed: newList,
+      previous: null,
+    }
+    this.setState(newState)
   }
   
   render() {
@@ -146,8 +154,9 @@ class Home extends Component<{}, AppState> {
       <div className={styles.stage}>
         <DataWindow data={this.state.current.meta} />
 
+          image:  
         <Image
-          src={this.state.current.summary.image}
+          src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${this.state.current.summary.id}.png`}
           alt='scyther'
           width={475}
           height={475}
@@ -155,6 +164,14 @@ class Home extends Component<{}, AppState> {
         />
 
         <div className={styles.buttonGroup}>
+          <button
+            className={styles.backButton}
+            id='back'
+            onClick={() => this.goBack()}
+            disabled={this.state.previous === null}
+          >
+          Back
+          </button>
           <button
             className={styles.smashButton}
             id='smash'
