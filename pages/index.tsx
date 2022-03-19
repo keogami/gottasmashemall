@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import Image from 'next/image'
+import styles from '../styles/Home.module.css'
 
 type Input = symbol
 
@@ -65,31 +66,39 @@ class Home extends Component<{}, AppState> {
   }
   
   render() {
-    return <>
-      <Image
-        src={this.state.current.image}
-        alt='scyther'
-        width={475}
-        height={475}
-      />
+    return <div className={styles.papa}>
+    <div className={styles.stage}>
+        <Image
+          src={this.state.current.image}
+          alt='scyther'
+          width={475}
+          height={475}
+          layout='fixed'
+        />
 
-      <button
-        id='smash'
-        onClick={() => this.handleInput(INPUT_SMASH)}
-      >
-      Smash
-      </button>
+        <div className={styles.buttonGroup}>
+          <button
+            className={styles.smashButton}
+            id='smash'
+            onClick={() => this.handleInput(INPUT_SMASH)}
+          >
+          Smash
+          </button>
 
-      <button
-        id='smash'
-        onClick={() => this.handleInput(INPUT_PASS)}
-      >
-      Pass
-      </button>
-      <ul>
+          <button
+            className={styles.passButton}
+            id='smash'
+            onClick={() => this.handleInput(INPUT_PASS)}
+          >
+          Pass
+          </button>
+        </div>
+      </div>
+
+      <ul className={styles.smashList}>
         {this.state.smashed.map(SmashItem)}
       </ul>
-    </>
+    </div>
   }
 }
 
