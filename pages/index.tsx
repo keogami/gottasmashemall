@@ -2,6 +2,7 @@ import {Component} from 'react'
 import Image from 'next/image'
 import { PokemonClient } from 'pokenode-ts'
 import styles from '../styles/Home.module.css'
+import Link from 'next/link'
 
 type Input = symbol
 
@@ -57,7 +58,7 @@ const generateID = (): string => {
 
 const sendToDB = async (list: string) => {
   const id = generateID()
-  const resp = await fetch('https://gottasmashemall-47a7.restdb.io/rest/smashlist', {
+  await fetch('https://gottasmashemall-47a7.restdb.io/rest/smashlist', {
     method: "POST",
     headers: {
       'x-apikey': '6235aa84dced170e8c83a3b2',
@@ -68,7 +69,7 @@ const sendToDB = async (list: string) => {
       value: list,
     })
   })
-  return resp.json()
+  return id
 }
 
 const api = new PokemonClient()
@@ -76,11 +77,14 @@ const api = new PokemonClient()
 type AppState = {
   smashed: PokemonData[]
   current: PokemonData
+  isShared: boolean,
+  shareID: string,
 }
 class Home extends Component<{}, AppState> {
   constructor(props: any) {
     super(props)
     this.state = {
+      isShared: false, shareID: '',
       smashed: [],
       current: {
         summary: {
@@ -98,7 +102,11 @@ class Home extends Component<{}, AppState> {
     const data = this.state.smashed.map(it => ({id: it.summary.id, name: it.summary.name}))
     const json = JSON.stringify(data)
     
-    console.log(await sendToDB(json))
+    const id = await sendToDB(json)
+
+    this.setState({
+      isShared: true, shareID: id,
+    })
   }
 
   componentDidMount() {
@@ -166,6 +174,9 @@ class Home extends Component<{}, AppState> {
       </div>
 
       <button onClick={() => this.serialize()}>Share</button>
+      {
+        this.state.isShared && <Link href={`/share/${this.state.shareID}`}><a>Click to go to your PermaShare Link</a></Link>
+      }
       <ul className={styles.smashList}>
         {this.state.smashed.map(data => data.summary).map(SmashItem)}
       </ul>
