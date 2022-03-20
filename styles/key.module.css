@@ -1,0 +1,6 @@
+.smashList {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 750px;
+  width: 100vw;
+}
