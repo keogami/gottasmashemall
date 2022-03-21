@@ -48,9 +48,9 @@ const Page: NextPage<Props, {}> = ({title, list, resKey}) => {
     <Head>
       <title>{title}</title>
     </Head>
-    <h1 className={styles.Logo}>Gotta Smash Em ALl</h1>
+    <h1 className={styles.Logo}>Gotta Smash Em All</h1>
     <main className={styles.main}>
-      <h2>The Smashed Ones:</h2>
+      <h2>The Smashed Ones</h2>
       <ul id={resKey}>
         {list.map(SpriteItem)}
       </ul>
