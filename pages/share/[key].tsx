@@ -1,6 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import styles from '../../styles/key.module.css'
 
 type PokemonData = {
   id: number
@@ -47,10 +48,13 @@ const Page: NextPage<Props, {}> = ({title, list, resKey}) => {
     <Head>
       <title>{title}</title>
     </Head>
-    The Smashed Ones:
-    <ul id={resKey}>
-      {list.map(SpriteItem)}
-    </ul>
+    <h1 className={styles.Logo}>Gotta Smash Em ALl</h1>
+    <main className={styles.main}>
+      <h2>The Smashed Ones:</h2>
+      <ul id={resKey}>
+        {list.map(SpriteItem)}
+      </ul>
+    </main>
   </div>
   )
 }
