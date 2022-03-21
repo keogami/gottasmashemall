@@ -33,7 +33,7 @@ type Props = {
 }
 
 const SpriteItem = (data: PokemonData) => (
-  <li key={data.id}>
+  <li title={data.name} key={data.id}>
     <Image
       src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${data.id}.png`}
       alt={data.name}
