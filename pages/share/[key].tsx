@@ -44,7 +44,7 @@ const SpriteItem = (data: PokemonData) => (
 
 const Page: NextPage<Props, {}> = ({title, list, resKey}) => {
   return (
-  <div>
+  <div className={styles.Body}>
     <Head>
       <title>{title}</title>
     </Head>
