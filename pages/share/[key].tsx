@@ -1,6 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import styles from '../../styles/key.module.css'
 
 type PokemonData = {
@@ -48,7 +49,9 @@ const Page: NextPage<Props, {}> = ({title, list, resKey}) => {
     <Head>
       <title>{title}</title>
     </Head>
-    <h1 className={styles.Logo}>Gotta Smash Em All</h1>
+    <h1 className={styles.Logo}>
+      <Link href="/"><a>Gotta Smash Em All</a></Link>
+    </h1>
     <main className={styles.main}>
       <h2>The Smashed Ones</h2>
       <ul id={resKey}>
